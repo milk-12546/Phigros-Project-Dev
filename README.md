@@ -39,16 +39,21 @@
 #### 每一份指教对我这个开发新手来说都非常珍贵，感谢你的包容与支持。
 
 ---
-<pre style="white-space: pre-wrap; word-wrap: break-word;"><h5>Phigros-Project-Dev: A small tool for Phigros related development.</h5>
-<h5>Copyright (C) 2026 milk-12546</h5>
-<h5>This program is free software: you can redistribute it and/or modify
+<pre style="white-space: pre-wrap; word-wrap: break-word;">
+Phigros-Project-Dev: A small tool for Phigros related development.
+
+Copyright (C) 2026 milk-12546
+
+This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.</h5>
-<h5>This program is distributed in the hope that it will be useful,
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.</h5>
-<h5>You should have received a copy of the GNU General Public License
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
 along with this program.  If not, see "https://www.gnu.org/licenses/".
-</h5></pre>
+</pre>
