@@ -4,7 +4,7 @@
 
 ---
 ##### GitHub Repo: [![Phigros-Project-Dev](https://img.shields.io/badge/GitHub-PhiProject--Dev-yellow?logo=github)](https://github.com/milk-12546/Phigros-Project-Dev)
-##### Acknowledgments: [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource) [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Library-red?logo=github)](https://github.com/7aGiven/PhigrosLibrary) [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--LocalAction--Python-red?logo=github)](https://github.com/wms26/Phi-LocalAction-python)
+##### Acknowledgments: [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource) [![PhigrosLibrary](https://img.shields.io/badge/GitHub-Phi--Library-red?logo=github)](https://github.com/7aGiven/PhigrosLibrary) [![Phi-LocalAction-python](https://img.shields.io/badge/GitHub-Phi--LocalAction--Python-red?logo=github)](https://github.com/wms26/Phi-LocalAction-python)
 ##### License: [![GPL-3.0](https://img.shields.io/badge/LICENSE-GPL--3.0-blue)](./LICENSE)
 
 ---
@@ -27,7 +27,7 @@ By referencing and integrating the implementation logic of multiple open-source 
 
 #### 📝 Change Log
 - For detailed refactoring records, functional changes, and experimental insights, please refer to:
-**[CHANGELOG.md](./CHANGELOG.md)**
+**[CHANGELOG_EN.md](./CHANGELOG_EN.md)**
 
 ---
 ## 🤝 Feedback & Contributions

@@ -4,7 +4,7 @@
 
 ---
 ##### GitHub仓库: [![Phigros-Project-Dev](https://img.shields.io/badge/GitHub-PhiProject--Dev-yellow?logo=github)](https://github.com/milk-12546/Phigros-Project-Dev)
-##### 致谢: [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource) [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Library-red?logo=github)](https://github.com/7aGiven/PhigrosLibrary) [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--LocalAction--Python-red?logo=github)](https://github.com/wms26/Phi-LocalAction-python)
+##### 致谢: [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource) [![PhigrosLibrary](https://img.shields.io/badge/GitHub-Phi--Library-red?logo=github)](https://github.com/7aGiven/PhigrosLibrary) [![Phi-LocalAction-python](https://img.shields.io/badge/GitHub-Phi--LocalAction--Python-red?logo=github)](https://github.com/wms26/Phi-LocalAction-python)
 ##### 协议: [![GPL-3.0](https://img.shields.io/badge/LICENSE-GPL--3.0-blue)](./LICENSE)
 
 ---
