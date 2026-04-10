@@ -20,7 +20,7 @@ class TapTapClient:
         self.uid = uuid.uuid4()
         self.ua = "okhttp/5.3.2"
         self.x_ua = (
-            "V=1&PN=TapTap&VN=2.40.1-rel.100000&VN_CODE=240011000&"
+            "V=1&PN=TapTap&VN=2.94.0-rel.100300&VN_CODE=294001003&"
             f"LOC=CN&LANG=zh_CN&CH=default&UID={self.uid}&NT=1&"
             "SR=1200x2670&DEB=Xiaomi&DEM=Xiaomi+14&OSV=14"
         )
