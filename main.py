@@ -1,3 +1,3 @@
 import scripts.taptap as taptap
 
-print(taptap.TapTapClient().check_latest())
+apk_path = taptap.TapTapClient().get_latest()

@@ -79,11 +79,14 @@ class TapTapClient:
         self.name = apk_info["name"]
         self.size = apk_info["size"]
         self.md5 = apk_info["md5"]
+        return self.url, self.name, self.md5
 
-    def check_latest(self, local_apk_dir:str="./output/apks/"):
+    def get_latest(self, local_apk_dir:str="./output/apks/"):
         version_code, version_name, file_path = apk_utils.find_latest_apk(local_apk_dir)
         if version_code is None or version_code < self.version_code:
             print(f"{version_name} -> {self.version_name}")
-            self.get_download_url()
-            file_path = downloader.FileDownloader(self.url, f"{local_apk_dir}{self.name}", self.size, self.md5, self.ua).start()
+            file_path = downloader.FileDownloader(self.get_download_url(), f"{local_apk_dir}{self.name}", self.size, self.md5, self.ua).start()
         return file_path
+
+if __name__ == "__main__":
+    print(TapTapClient().get_download_url())
