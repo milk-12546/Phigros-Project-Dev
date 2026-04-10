@@ -14,7 +14,9 @@
 By referencing and integrating the implementation logic of multiple open-source projects, this repository aims to explore underlying principles through hands-on practice, further enhancing my coding and architectural skills as a beginner developer.
 
 #### 📖 Learning & Disclaimer
-- **Beginner Note**: I am currently in the learning phase, and this project is not primarily intended for the general public. The code may contain extensive comments and experimental changes, which might not follow standard conventions.
+- **Beginner Note**: I am currently in the learning phase, and this project is not primarily intended for the general public. The code may contain ~~extensive comments and~~ experimental changes, which might not follow standard conventions.
+>Where are all the comments? I don't have the habit of writing comments at all!
+
 - **Usage Limitation**: This project is for personal research and educational purposes only. **Do not use it in production environments.**
 - **Compliance**: This project references several projects under the **GPL-3.0** license. In accordance with license requirements, this project is also open-sourced under the **GPL-3.0** license.
 

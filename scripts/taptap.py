@@ -7,10 +7,11 @@ import urllib.parse
 import time
 import hashlib
 import uuid
+import scripts.downloader as downloader
 
 from http.client import HTTPSConnection
 
-#只是把 https://github.com/7aGiven/Phigros_Resource/blob/master/taptap.py 拆开并用class重写
+
 class TapTapClient:
     def __init__(self, app_id:int=165287):
         self.app_id = app_id
@@ -18,9 +19,9 @@ class TapTapClient:
         self.uid = uuid.uuid4()
         self.ua = "okhttp/5.3.2"
         self.x_ua = (
-            f"V=1&PN=TapTap&VN=2.40.1-rel.100000&VN_CODE=240011000&"
+            "V=1&PN=TapTap&VN=2.40.1-rel.100000&VN_CODE=240011000&"
             f"LOC=CN&LANG=zh_CN&CH=default&UID={self.uid}&NT=1&"
-            f"SR=1080x2030&DEB=Xiaomi&DEM=Redmi+Note+5&OSV=9"
+            "SR=1200x2670&DEB=Xiaomi&DEM=Xiaomi+14&OSV=14"
         )
         self.quoted_x_ua = urllib.parse.quote(self.x_ua)
 
@@ -31,6 +32,11 @@ class TapTapClient:
         self.version_name = "0.0.0.0"
 
         self._fetch_remote_info()
+
+        self.url = None
+        self.name = None
+        self.size = None
+        self.md5 = None
 
     @staticmethod
     def _get_nonce():
@@ -52,7 +58,7 @@ class TapTapClient:
         t = int(time.time())
         param = (
             f"abi=arm64-v8a,armeabi-v7a,armeabi&id={self.apk_id}&node={self.uid}"
-            f"&nonce={self._get_nonce}&sandbox=1&screen_densities=xhdpi&time={t}"
+            f"&nonce={self._get_nonce()}&sandbox=1&screen_densities=xhdpi&time={t}"
         )
 
         byte = f"X-UA={self.x_ua}&{param}PeCkE6Fu0B10Vm9BKfPfANwCUAn5POcs"
@@ -64,17 +70,16 @@ class TapTapClient:
             "Content-Type": "application/x-www-form-urlencoded",
             "User-Agent": self.ua
         }
-        self.conn.request("POST", path, body=body.encode(),headers=headers)
+        self.conn.request("POST", path, body=body.encode(), headers=headers)
 
         r = json.loads(self.conn.getresponse().read())
         apk_info = r["data"]["apk"]
-        download_url = apk_info["download"]
-        size = apk_info["size"]
-        md5 = apk_info["md5"]
-        return download_url, size, md5
+        self.url = apk_info["download"]
+        self.name = apk_info["name"]
+        self.size = apk_info["size"]
+        self.md5 = apk_info["md5"]
 
-    #这个才是新加的，虽然很没用，也还没做完
     def check_latest(self, loc_ver_code:int=0):
         if loc_ver_code < self.version_code:
-            return self.get_download_url()
-        return None
+            self.get_download_url()
+            downloader.FileDownloader(self.url, f"output/{self.name}", self.size, self.md5, self.ua).start()

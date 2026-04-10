@@ -3,10 +3,11 @@
 #### 其他语言 (Other Language) : [中文](./CHANGELOG.md)
 
 ---
-### [Unreleased] -- 2026-04-09
+### [Unreleased] -- 2026-04-10
 #### Added:
 - [taptap.py](./scripts/taptap.py) -- Source: [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource/blob/master/taptap.py)
-- [CHANGELOG_EN.md](./CHANGELOG_EN.md)
+- [CHANGELOG_EN.md](./CHANGELOG_EN.md) English version
+- [downloader.py](./scripts/downloader.py) Barely usable
 
 #### Changed:
 - Rewrote [taptap.py](./scripts/taptap.py) using `class` and added a **fairly useless** version comparison feature. -- Source: [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource/blob/master/taptap.py)
