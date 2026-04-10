@@ -3,7 +3,7 @@
 import json
 import random
 import string
-import urllib
+import urllib.parse
 import time
 import hashlib
 import uuid
