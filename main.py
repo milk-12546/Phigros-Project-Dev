@@ -1,3 +1,3 @@
 import scripts.taptap as taptap
 
-taptap.TapTapClient().check_latest()
+print(taptap.TapTapClient().check_latest())

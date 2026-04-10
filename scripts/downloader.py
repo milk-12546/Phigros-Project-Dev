@@ -63,7 +63,6 @@ class FileDownloader:
 
         actual_md5 = md5_hash.hexdigest().lower()
         if actual_md5 == self.md5.lower():
-            print("MD5 True")
             return True
         else:
             print(f"MD5 False: {self.md5} <-x- {actual_md5}")
@@ -102,4 +101,4 @@ class FileDownloader:
 
         main_pbar.close()
         print("\n" * (self.thread_count + 1))
-        return self.verify_md5()
+        return self.name
