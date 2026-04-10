@@ -79,7 +79,7 @@ class TapTapClient:
         self.name = apk_info["name"]
         self.size = apk_info["size"]
         self.md5 = apk_info["md5"]
-        return self.url, self.name, self.md5
+        return self.url
 
     def get_latest(self, local_apk_dir:str="./output/apks/"):
         version_code, version_name, file_path = apk_utils.find_latest_apk(local_apk_dir)
