@@ -1,6 +1,5 @@
 #Original source code from https://github.com/7aGiven/Phigros_Resource/blob/master/taptap.py
 #Change in https://github.com/milk-12546/Phigros-Project-Dev/blob/main/CHANGELOG.md
-import os
 import json
 import random
 import string
@@ -8,8 +7,8 @@ import urllib.parse
 import time
 import hashlib
 import uuid
-import scripts.downloader as downloader
-import scripts.find_local_apk as find_local_apk
+import utils.downloader as downloader
+import utils.apk_utils as apk_utils
 
 from http.client import HTTPSConnection
 
@@ -82,11 +81,9 @@ class TapTapClient:
         self.md5 = apk_info["md5"]
 
     def check_latest(self, local_apk_dir:str="./output/apks/"):
-        file_path = None
-        if os.path.exists(local_apk_dir):
-            version_code, version_name, file_path = find_local_apk.find_latest_apks(local_apk_dir)
-            if version_code < self.version_code:
-                print(f"{version_name} -> {self.version_name}")
-                self.get_download_url()
-                file_path = downloader.FileDownloader(self.url, f"{local_apk_dir}{self.name}", self.size, self.md5, self.ua).start()
+        version_code, version_name, file_path = apk_utils.find_latest_apk(local_apk_dir)
+        if version_code is None or version_code < self.version_code:
+            print(f"{version_name} -> {self.version_name}")
+            self.get_download_url()
+            file_path = downloader.FileDownloader(self.url, f"{local_apk_dir}{self.name}", self.size, self.md5, self.ua).start()
         return file_path

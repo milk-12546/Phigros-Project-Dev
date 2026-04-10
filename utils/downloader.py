@@ -2,7 +2,9 @@ import sys
 import hashlib
 import threading
 from urllib import request
+
 from tqdm import tqdm
+
 
 class FileDownloader:
     def __init__(self, url:str, name:str, size:int=None, md5:str=None, ua:str="okhttp/5.3.2", thread_count:int=8):
@@ -86,7 +88,15 @@ class FileDownloader:
             f.truncate(file_size)
 
         chunk_size = file_size // self.thread_count
-        main_pbar = tqdm(total=file_size, unit="B", unit_scale=True, desc="Total", position=0, ncols=80, file=sys.stdout)
+        main_pbar = tqdm(
+            total=file_size,
+            unit="B",
+            unit_scale=True,
+            desc="Total",
+            position=0,
+            ncols=80,
+            file=sys.stdout
+        )
 
         threads = []
         for i in range(self.thread_count):
@@ -101,4 +111,6 @@ class FileDownloader:
 
         main_pbar.close()
         print("\n" * (self.thread_count + 1))
-        return self.name
+        if self.verify_md5():
+            return self.name
+        return None
