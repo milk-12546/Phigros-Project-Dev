@@ -10,7 +10,7 @@ import uuid
 
 from http.client import HTTPSConnection
 
-
+#只是把 https://github.com/7aGiven/Phigros_Resource/blob/master/taptap.py 拆开并用class重写
 class TapTapClient:
     def __init__(self, app_id:int=165287):
         self.app_id = app_id
@@ -73,6 +73,7 @@ class TapTapClient:
         md5 = apk_info["md5"]
         return download_url, size, md5
 
+    #这个才是新加的，虽然很没用，也还没做完
     def check_latest(self, loc_ver_code:int=0):
         if loc_ver_code < self.version_code:
             return self.get_download_url()
