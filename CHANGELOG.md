@@ -3,7 +3,7 @@
 #### Other Language (其他语言) ： [English](./CHANGELOG_EN.md)
 
 ---
-### [未发布] -- 2026-04-09
+### [未发布] -- 2026-04-10
 #### 新增:
 - [taptap.py](./scripts/taptap.py) -- 来源 [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource/blob/master/taptap.py)
 - [CHANGELOG_EN.md](./CHANGELOG_EN.md) 英文版
