@@ -3,6 +3,18 @@
 #### Other Language (其他语言) ： [English](./CHANGELOG_EN.md)
 
 ---
+### [未发布] -- 2026-04-11
+#### 新增:
+- [taptap.py](./scripts/taptap.py) 版本选择，下载和输出 -- 来源 [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource/blob/master/taptap.py)
+- [apk_utils.py](utils/apk_utils.py) 输出
+
+#### 修改：
+- ###### (无)
+
+#### 修复：
+- ###### (无)
+
+---
 ### [未发布] -- 2026-04-10
 #### 新增:
 - [taptap.py](./scripts/taptap.py) -- 来源 [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource/blob/master/taptap.py)

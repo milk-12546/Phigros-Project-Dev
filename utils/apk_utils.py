@@ -33,6 +33,9 @@ def find_latest_apk(apk_dir):
             latest_name = name
             latest_path = file_path
 
-    if latest_code == -1:
+    if latest_code != -1:
+        print(f"本地最新版本: {latest_name}")
+        return latest_code, latest_name, latest_path
+    else:
+        print("本地未找到有效 APK")
         return None, None, None
-    return latest_code, latest_name, latest_path
