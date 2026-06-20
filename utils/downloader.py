@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 
 class FileDownloader:
-    def __init__(self, url:str, name:str, size:int=None, md5:str=None, ua:str="okhttp/5.3.2", thread_count:int=8):
+    def __init__(self, url: str, name: str, size: int=None, md5: str=None, ua: str="okhttp/5.3.2", thread_count: int=8):
         self.url = url
         self.name = name
         self.size = int(size) if size else None
@@ -54,7 +54,7 @@ class FileDownloader:
         finally:
             sub_pbar.close()
 
-    def verify_md5(self):
+    def _verify_md5(self):
         if not self.md5:
             return True
 
@@ -111,6 +111,6 @@ class FileDownloader:
 
         main_pbar.close()
         print("\n" * (self.thread_count + 1))
-        if self.verify_md5():
+        if self._verify_md5():
             return self.name
         return None

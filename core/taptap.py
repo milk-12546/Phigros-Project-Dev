@@ -15,7 +15,7 @@ import utils.apk_utils as apk_utils
 
 
 class TapTapClient:
-    def __init__(self, app_id: int = 165287):
+    def __init__(self, app_id: int=165287):
         self.app_id = app_id
         self.host = "api.taptapdada.com"
         self.uid = uuid.uuid4()
@@ -82,7 +82,7 @@ class TapTapClient:
         self.md5 = apk_info["md5"]
         return self.url
 
-    def get_apk(self, specific_ver: str = None, local_apk_dir: str = "./output/apks/"):
+    def get_apk(self, specific_ver:str = None, local_apk_dir:str = "./output/apks/"):
         os.makedirs(local_apk_dir, exist_ok=True)
         file_path, version_name = None, None
 
@@ -120,7 +120,8 @@ class TapTapClient:
                 name=os.path.join(local_apk_dir, self.name),
                 size=self.size,
                 md5=self.md5,
-                ua=self.ua
+                ua=self.ua,
+                thread_count=16
             )
             file_path = download.start()
             if file_path is None:
