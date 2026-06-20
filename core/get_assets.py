@@ -1,3 +1,3 @@
 import scripts.catalog as catalog
 
-print(catalog.parser("../scripts/catalog.json"))
+catalog.parser("../scripts/catalog.json")

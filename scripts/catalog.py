@@ -1,9 +1,10 @@
 import base64
 import json
+import os
 from typing import Dict, List, Union
 
 
-def parser(catalog_path: str) -> Dict[str, str]:
+def parser(catalog_path: str) -> str:
     with open(catalog_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
@@ -56,14 +57,25 @@ def parser(catalog_path: str) -> Dict[str, str]:
         if isinstance(ref, int) and ref != 65535:
             temp_table[i][1] = temp_table[ref][0]
 
-    result = {}
+    temp = {}
     for key, bundle in temp_table:
         if isinstance(key, int):
             continue
         if key.startswith("Assets/Tracks/"):
             key = key[14:]
-            result[key] = bundle
+            temp[key] = bundle
         elif key.startswith("TrackFile/") or key.startswith("avatar."):
-            result[key] = bundle
+            temp[key] = bundle
 
-    return result
+    result = {}
+    for key in temp:
+        if key.startswith("avatar.") or key.startswith("#ChapterCover"):
+            continue
+        bundle = temp[key]
+        song_id, file = os.path.split(key)
+        if song_id not in result:
+            result[song_id] = {}
+        file_name = os.path.splitext(file)[0]
+        result[song_id][file_name] = bundle
+    with open("../temp/bundle_mapping.json", "w", encoding="utf-8") as f:
+        json.dump(result, f, sort_keys=True, ensure_ascii=False, indent=4)
