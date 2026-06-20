@@ -10,6 +10,7 @@ def parser(g, l, t):
     env.load_file(l)
     game_information = None
     collections = None
+    tips = None
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
@@ -20,6 +21,9 @@ def parser(g, l, t):
         #文件+头像 名字映射
         elif data.m_Script.get_obj().read().name == "GetCollectionControl":
             collections = obj.read_typetree(t["GetCollectionControl"], True)
+        #Tips文本
+        elif data.m_Script.get_obj().read().name == "TipsProvider":
+            tips = obj.read_typetree(t["TipsProvider"], True)
 
 
 # ========== GameInformation ========== #
@@ -128,3 +132,9 @@ def parser(g, l, t):
         avatars[item.addressableKey[7:]] = item.name
     with open("./temp/key_avatar_name.json", "w", encoding="utf-8") as f:
         json.dump(avatars, f, ensure_ascii=False, indent=4)
+
+
+# ========== TipsProvider ========== #
+    #Tips文本
+    with open("./temp/tips.json", "w", encoding="utf-8") as f:
+        json.dump(tips.tips[0].tips, f, ensure_ascii=False, indent=4)

@@ -1,9 +1,14 @@
+import os
+
 from core import taptap, resource_extractor as extract, get_game_info as game_info
 
 
 #获取APK
 apk_path, apk_ver = taptap.TapTapClient().get_apk("com.PigeonGames.Phigros-151.apk")
 apk = extract.APK(apk_path)
+
+#确保缓存目录存在
+os.makedirs("./temp", exist_ok=True)
 
 #提取游戏信息
 apk.info()
