@@ -65,16 +65,27 @@ def parser(data) -> str:
         elif key.startswith("TrackFile/") or key.startswith("avatar."):
             temp[key] = bundle
 
-    result = {}
+    result = {
+        "songs": {},
+        "avatar": {},
+        "cover": {}
+    }
     for key in temp:
-        if key.startswith("avatar.") or key.startswith("#ChapterCover"):
-            continue
         bundle = temp[key]
-        song_id, file = os.path.split(key)
-        if song_id not in result:
-            result[song_id] = {}
-        file_name = os.path.splitext(file)[0]
-        result[song_id][file_name] = bundle
+        if key.startswith("avatar."):
+            if key[7:] not in result:
+                result["avatar"][key[7:]] = {}
+            result["avatar"][key[7:]] = bundle
+        elif key.startswith("#ChapterCover/"):
+            if key[14:-4] not in result:
+                result["cover"][key[14:-4]] = {}
+            result["cover"][key[14:-4]] = bundle
+        else:
+            song_id, file = os.path.split(key)
+            if song_id not in result["songs"]:
+                result["songs"][song_id] = {}
+            file_name = os.path.splitext(file)[0]
+            result["songs"][song_id][file_name] = bundle
 
     mapping = json.dumps(result, sort_keys=True, ensure_ascii=False, indent=4)
 
