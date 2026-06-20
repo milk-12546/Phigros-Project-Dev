@@ -93,7 +93,7 @@ class TapTapClient:
             if code is None:
                 raise FileNotFoundError(f"指定的 APK 文件不存在或无效: {target_path}")
             print(f"使用指定版本: {name} (版本号 {code})\n路径: {target_path}")
-            return target_path, name
+            return target_path, name, True
 
         local_code, local_name, local_path = apk_utils.find_latest_apk(local_apk_dir)
 
@@ -133,7 +133,7 @@ class TapTapClient:
         if file_path is None:
             raise Exception("无法获得有效的 APK 文件路径")
         print(f"使用版本: {version_name}\n路径: {file_path}")
-        return file_path, version_name
+        return file_path, version_name, False
 
 
 if __name__ == "__main__":
