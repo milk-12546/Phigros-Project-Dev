@@ -1,19 +1,17 @@
 import base64
 import json
 import os
-from typing import Dict, List, Union
+
+from typing import List, Union
 
 
-def parser(catalog_path: str) -> str:
-    with open(catalog_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-
+def parser(data) -> str:
     key_data = base64.b64decode(data["m_KeyDataString"])
     bucket_data = base64.b64decode(data["m_BucketDataString"])
     entry_data = base64.b64decode(data["m_EntryDataString"])
 
     def read_int(offset: int) -> int:
-        return int.from_bytes(bucket_data[offset:offset + 4], 'little')
+        return int.from_bytes(bucket_data[offset: offset + 4], 'little')
 
     temp_table: List[List[Union[int, str, None]]] = []
     pos = 0
@@ -77,5 +75,9 @@ def parser(catalog_path: str) -> str:
             result[song_id] = {}
         file_name = os.path.splitext(file)[0]
         result[song_id][file_name] = bundle
-    with open("../temp/bundle_mapping.json", "w", encoding="utf-8") as f:
-        json.dump(result, f, sort_keys=True, ensure_ascii=False, indent=4)
+
+    mapping = json.dumps(result, sort_keys=True, ensure_ascii=False, indent=4)
+
+    with open("./temp/bundle_mapping.json", "w", encoding="utf-8") as f:
+        f.write(mapping)
+    return mapping
