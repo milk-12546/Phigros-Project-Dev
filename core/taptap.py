@@ -83,7 +83,7 @@ class TapTapClient:
         self.md5 = apk_info["md5"]
         return self.url
 
-    def get_apk(self, specific_ver:str = None, local_apk_dir:str = "./output/apks/"):
+    def get_apk(self, specific_ver: str = None, local_apk_dir: str = "./output/apks/"):
         os.makedirs(local_apk_dir, exist_ok=True)
         file_path, version_name = None, None
 
@@ -116,15 +116,16 @@ class TapTapClient:
             print("本地已是最新版本，无需下载")
 
         if need_download:
-            download = downloader.FileDownloader(
-                url=self.get_download_url(),
-                name=os.path.join(local_apk_dir, self.name),
-                size=self.size,
-                md5=self.md5,
-                ua=self.ua,
-                thread_count=16
+            self.get_download_url()
+            file_path = downloader.download_file(
+                url=self.url,
+                output_dir=local_apk_dir,
+                num_threads=8,
+                retries=3,
+                checksum=f"md5:{self.md5}" if self.md5 else None,
+                block_size=10 * 1024 * 1024,
+                show_progress=True
             )
-            file_path = download.start()
             if file_path is None:
                 raise Exception("下载失败（MD5 校验未通过）")
             version_name = self.version_name
