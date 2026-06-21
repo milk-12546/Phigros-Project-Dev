@@ -1,29 +1,32 @@
 import os
 
 from core import taptap, resource_extractor as extract
+from scripts import build
 
 
-#获取APK信息
+# ========== 获取APK信息 ========== #
 apk_path, apk_ver, spec_ver = taptap.TapTapClient().get_apk("com.PigeonGames.Phigros-151.apk")
 
-#检查上次版本
+# ========== 检查上次版本 ========== #
 need_update = False
-f = os.open("./temp/last.txt", os.O_RDWR | os.O_CREAT)
-#last = os.read(f, 256).decode("utf-8")
-last = "0"
-if last and os.path.exists("./temp"):
+os.makedirs("./output/info", exist_ok=True)
+f = os.open("./output/info/info_ver.txt", os.O_RDWR | os.O_CREAT)
+info_ver = os.read(f, 256).decode("utf-8")
+if info_ver and os.path.exists("./temp"):
     if spec_ver:
-        if apk_ver != last:
+        if apk_ver != info_ver:
             need_update = True
     else:
-        if apk_ver != last:
+        if apk_ver != info_ver:
             need_update = True
 else:
     need_update = True
 
-#如果需要更新资源
+#手动更新资源（临时调试）
+need_update = True
+# ========== 资源信息加载 ========== #
 if need_update:
-    #确保缓存目录存在
+    #确保目录存在
     os.makedirs("./temp", exist_ok=True)
 
     #提取游戏信息
@@ -34,6 +37,10 @@ if need_update:
     mapping = apk.catalog()
 
     #游戏信息整理
+    build_info = build.Build("./temp", "./output", mapping, apk_ver)
+    build_info.avatar()
+    build_info.cover()
+    build_info.song()
 
     #关闭文件
     apk.close()
@@ -42,8 +49,10 @@ if need_update:
     os.ftruncate(f, 0)
     os.lseek(f, 0, os.SEEK_SET)
     os.write(f, apk_ver.encode("utf-8"))
+else:
+    pass
 
-#资源提取流程
+# ========== 资源提取流程 ========== #
 
-#关闭文件
+# ========== 关闭文件 ========== #
 os.close(f)

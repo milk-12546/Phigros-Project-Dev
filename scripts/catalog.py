@@ -67,19 +67,19 @@ def parser(data) -> str:
 
     result = {
         "songs": {},
-        "avatar": {},
-        "cover": {}
+        "avatars": {},
+        "covers": {}
     }
     for key in temp:
         bundle = temp[key]
         if key.startswith("avatar."):
             if key[7:] not in result:
-                result["avatar"][key[7:]] = {}
-            result["avatar"][key[7:]] = bundle
+                result["avatars"][key[7:]] = {}
+            result["avatars"][key[7:]] = bundle
         elif key.startswith("#ChapterCover/"):
             if key[14:-4] not in result:
-                result["cover"][key[14:-4]] = {}
-            result["cover"][key[14:-4]] = bundle
+                result["covers"][key[14:-4]] = {}
+            result["covers"][key[14:-4]] = bundle
         else:
             song_id, file = os.path.split(key)
             if song_id not in result["songs"]:
@@ -87,8 +87,8 @@ def parser(data) -> str:
             file_name = os.path.splitext(file)[0]
             result["songs"][song_id][file_name] = bundle
 
-    mapping = json.dumps(result, sort_keys=True, ensure_ascii=False, indent=4)
+    mapping = json.dumps(result, ensure_ascii=False, indent=4)
 
     with open("./temp/bundle_mapping.json", "w", encoding="utf-8") as f:
         f.write(mapping)
-    return mapping
+    return json.loads(mapping)

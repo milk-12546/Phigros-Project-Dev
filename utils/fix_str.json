@@ -1,0 +1,58 @@
+{
+    "songName": {
+        "AnotherMe.DAAN.0": "Another Me {KALPA}",
+        "Random.SobremSilentroom.1": "Random {R}",
+        "Random.SobremSilentroom.2": "Random {A}",
+        "Random.SobremSilentroom.3": "Random {N}",
+        "Random.SobremSilentroom.4": "Random {D}",
+        "Random.SobremSilentroom.5": "Random {O}",
+        "Random.SobremSilentroom.6": "Random {M}",
+        "Cipher20.TetrajectoryfeatCtymax.0": "Cipher ：2&|0",
+        "parsey.siqlo.0": "ρarsley"
+    },
+    "charter": {
+        "Random.SobremSilentroom.1": {
+            "EZ": "Barbarianerman × V17AMax",
+            "HD": "IMD_6 × JKy",
+            "IN": "_鉄 × Rikko"
+        },
+        "Random.SobremSilentroom.2": {
+            "EZ": "Barbarianerman × Pcat",
+            "HD": "IMD_6 × Ctymax",
+            "IN": "_鉄 × NerSAN"
+        },
+        "Random.SobremSilentroom.3": {
+            "EZ": "Barbarianerman × TimiTini",
+            "HD": "IMD_6 × Gausbon",
+            "IN": "_鉄 × Myna"
+        },
+        "Random.SobremSilentroom.4": {
+            "EZ": "Barbarianerman × Clutter",
+            "HD": "IMD_6 × Uvernight",
+            "IN": "_鉄 × Su1fuR"
+        },
+        "Random.SobremSilentroom.5": {
+            "EZ": "Barbarianerman × 阿爽",
+            "HD": "IMD_6 × 晨",
+            "IN": "_鉄 × 百九十八"
+        },
+        "Random.SobremSilentroom.6": {
+            "EZ": "Barbarianerman × J.R",
+            "HD": "IMD_6 × Likey",
+            "IN": "_鉄 × XMT小咩兔"
+        }
+    },
+    "fileError": {
+        ": ": "：",
+        "? ": "？",
+        "\\": " ",
+        "/": " ",
+        ":": "：",
+        "*": " ",
+        "?": "？",
+        "\"": "'",
+        "<": "‹",
+        ">": "›",
+        "|": "|"
+    }
+}

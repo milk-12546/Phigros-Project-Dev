@@ -11,7 +11,7 @@ class APK:
 
     def catalog(self):
         with self.apk_src.open("assets/aa/catalog.json") as c:
-            catalog.parser(json.load(c))
+            return catalog.parser(json.load(c))
 
     def info(self):
         with self.apk_src.open("assets/bin/Data/globalgamemanagers.assets") as g:

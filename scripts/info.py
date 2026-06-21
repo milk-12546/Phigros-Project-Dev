@@ -1,5 +1,6 @@
 import json
 import hashlib
+import os.path
 
 from utils import dxf
 
@@ -30,6 +31,6 @@ def yml(level, data):
     )
 
 def info(song_id, level, mus, ill, chart):
-    with open(r"C:\Users\ml354\OneDrive\文档\Phigros-Project-Dev\temp\song_info.json", "r", encoding="utf-8") as f:
+    with open(os.path.join("song_info.json"), "r", encoding="utf-8") as f:
         data = json.load(f)[song_id]
     return txt(int.from_bytes(hashlib.sha256(song_id.encode("utf-8")).digest()[:8], byteorder="big"), level, mus, ill, chart, data), yml(level, data)
