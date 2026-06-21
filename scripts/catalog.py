@@ -68,7 +68,9 @@ def parser(data) -> str:
     result = {
         "songs": {},
         "avatars": {},
-        "covers": {}
+        "covers": {},
+        "audio": {},
+        "soundEffects": {}
     }
     for key in temp:
         bundle = temp[key]
@@ -80,6 +82,18 @@ def parser(data) -> str:
             if key[14:-4] not in result:
                 result["covers"][key[14:-4]] = {}
             result["covers"][key[14:-4]] = bundle
+        elif os.path.split(key)[0] == "TrackFile":
+            key, file = os.path.split(key)
+            if key not in result["audio"]:
+                result["audio"][key] = {}
+            file_name = os.path.splitext(file)[0]
+            result["audio"][file_name] = bundle
+        elif os.path.split(key)[0] == "TrackFile/SE":
+            key, file = os.path.split(key)
+            if key not in result["soundEffects"]:
+                result["soundEffects"][key] = {}
+            file_name = os.path.splitext(file)[0]
+            result["soundEffects"][file_name] = bundle
         else:
             song_id, file = os.path.split(key)
             if song_id not in result["songs"]:
@@ -87,7 +101,7 @@ def parser(data) -> str:
             file_name = os.path.splitext(file)[0]
             result["songs"][song_id][file_name] = bundle
 
-    mapping = json.dumps(result, ensure_ascii=False, indent=4)
+    mapping = json.dumps(result, sort_keys=True, ensure_ascii=False, indent=4)
 
     with open("./temp/bundle_mapping.json", "w", encoding="utf-8") as f:
         f.write(mapping)
