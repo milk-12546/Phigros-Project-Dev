@@ -5,7 +5,7 @@ from scripts import build
 
 
 # ========== 获取APK信息 ========== #
-apk_path, apk_ver, spec_ver = taptap.TapTapClient().get_apk("com.PigeonGames.Phigros-151.apk")
+apk_path, apk_ver, spec_ver = taptap.TapTapClient().get_apk()
 
 # ========== 检查上次版本 ========== #
 need_update = False
