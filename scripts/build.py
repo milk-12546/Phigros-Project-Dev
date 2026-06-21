@@ -58,7 +58,7 @@ class Build:
                 "previewStart\tpreviewEnd\tdifferentMusic\tdifferentCover\t"
                 "music_bundle\till_bundle\tillBlur_bundle\tillLowRes_bundle\t"
                 "chartEZ_bundle\tchartHD_bundle\tchartIN_bundle\tchartAT_bundle\tchartLegacy_bundle\t"
-                "nonRegular\tisSP\n"
+                "nonRegular\tisSP\t#\n"
             )
 
             def template(
@@ -68,7 +68,7 @@ class Build:
                     preview_start="", preview_end="", different_music="", different_cover="",
                     music_bundle="", ill_bundle="", ill_blur_bundle="", ill_low_res_bundle="",
                     ez_bundle="", hd_bundle="", in_bundle="", at_bundle="", legacy_bundle="",
-                    non_regular="", sp=""
+                    non_regular="", sp="", num=""
             ):
                 song_info = songs_info[key]
                 song_bundle = songs_bundle[key]
@@ -146,6 +146,9 @@ class Build:
                     if not ez_bundle and not hd_bundle and in_bundle and not at_bundle:
                         sp = True
 
+                if song_id in songs_info:
+                    num = list(songs_info.keys()).index(song_id) + 1
+
                 tsv.write(
                     f"{song_id}\t{song_name}\t{chapter}\t{song_composer}\t{song_illustrator}\t"
                     f"{diff_ez}\t{diff_hd}\t{diff_in}\t{diff_at}\t{diff_legacy}\t"
@@ -153,7 +156,7 @@ class Build:
                     f"{preview_start}\t{preview_end}\t{different_music}\t{different_cover}\t"
                     f"{music_bundle}\t{ill_bundle}\t{ill_blur_bundle}\t{ill_low_res_bundle}\t"
                     f"{ez_bundle}\t{hd_bundle}\t{in_bundle}\t{at_bundle}\t{legacy_bundle}\t"
-                    f"{non_regular}\t{sp}\n"
+                    f"{non_regular}\t{sp}\t{num}\n"
                 )
 
             for song_id in songs_bundle:

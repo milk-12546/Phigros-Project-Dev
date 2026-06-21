@@ -23,7 +23,7 @@ else:
     need_update = True
 
 #手动更新资源（临时调试）
-need_update = False
+#need_update = True
 # ========== 资源信息加载 ========== #
 if need_update:
     #确保目录存在
