@@ -11,7 +11,7 @@ need_update = False
 f = os.open("./temp/last.txt", os.O_RDWR | os.O_CREAT)
 #last = os.read(f, 256).decode("utf-8")
 last = "0"
-if last:
+if last and os.path.exists("./temp"):
     if spec_ver:
         if apk_ver != last:
             need_update = True
