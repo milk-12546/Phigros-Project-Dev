@@ -16,44 +16,88 @@ class Build:
         avatars_bundle = self.bundle_map["avatars"]
         with open(os.path.join(self.temp_dir, "key_avatar_name.json"), "r", encoding="utf-8") as f:
             avatar_dict = json.load(f)
-        with open(os.path.join(self.output_dir, "./info/avatar.tsv"), "w", newline="", encoding="utf-8") as tsv:
+            print(f"    [Info]    [build.avatar]: \033[36m\"{os.path.join(self.temp_dir, "key_avatar_name.json")}\033[0m\" 已加载")
+        print()
+        with open(os.path.join(self.output_dir, r".\info\avatar.tsv"), "w", newline="", encoding="utf-8") as tsv:
             tsv.write("key\tname\tbundle\n")
             for avatar in avatars_bundle:
+                #print(f"    \033[34m[Debug]\033[0m   [avatar.name]:  正在处理 \033[36m\"{avatar}\"\033[0m 的命名")
                 if avatar in avatar_dict:
                     avatar_name = avatar_dict[avatar]
+                    print(f"    [Info]    [avatar.name]: \033[36m\"{avatar}\"\033[0m 命名映射为 \033[36m\"{avatar_name}\"\033[0m")
                 else:
-                    print(f"    \033[33m[Warning]\033[0m [avatar.name]: \033[36m\"{avatar}\"\033[0m 未实装 或 无对应头像命名，将使用默认文件名")
+                    print(f"    \033[33m[Warning]\033[0m [avatar.name]: \033[36m\"{avatar}\"\033[0m 无对应头像命名，将使用默认文件名")
                     avatar_name = avatar
                 tsv.write(f"{avatar}\t{avatar_name}\t{avatars_bundle[avatar]}\n")
+            print(f"    \033[32m[Save]\033[0m    [avatar.build]: 头像索引已保存至 \033[36m\"{os.path.join(self.output_dir, r".\info\avatar.tsv")}\"\033[0m")
 
     def cover(self):
-        print("\n[build.cover]    ========== 正在建立章节封面资源信息映射 ==========")
+        print("\n[build.cover]    ========== 正在建立章节封面资源信息索引 ==========")
         covers_bundle = self.bundle_map["covers"]
         with open(os.path.join(self.temp_dir, "chapters_name.json"), "r", encoding="utf-8") as f:
             cover_dict = json.load(f)
-        with open(os.path.join(self.output_dir, "./info/cover.tsv"), "w", newline="", encoding="utf-8") as tsv:
-            tsv.write("key\tname\tbundle\n")
+            print(f"    [Info]    [build.cover]: \033[36m\"{os.path.join(self.temp_dir, "chapters_name.json")}\033[0m\" 已加载")
+        print()
+        with open(os.path.join(self.output_dir, r".\info\cover.tsv"), "w", newline="", encoding="utf-8") as tsv:
+            tsv.write("name\tinstalled\tcover_bundle\tcoverBlur_bundle\n")
+            cover_name = ""
+            d = {"temp":[],"bundle":{},"installed":[]}
             for cover in covers_bundle:
-                cover_name = None
+                #print(f"    \033[34m[Debug]\033[0m   [cover.name]:  正在处理 \033[36m\"{cover}\"\033[0m 的命名")
+                blur = False
+                if cover.endswith("Blur"):
+                    cover_fix_name = cover[:-4]
+                    blur = True
+                elif cover.endswith("BlurS"):
+                    cover_fix_name = cover[:-5] + "S"
+                    blur = True
+                else:
+                    cover_fix_name = cover
                 for cover_id in cover_dict:
-                    if cover_id in cover:
-                        cover_name = f"{cover.replace(cover_id, f"{cover_dict[cover_id]} (")})".replace(" ()", "")
+                    if cover_fix_name.startswith(cover_id):
+                        d["temp"].append(cover)
+                        if cover_fix_name.replace(cover_id, ""):
+                            if not cover_fix_name[len(cover_id):].startswith("_"):
+                                cover_fix_name = f"{cover_fix_name[:len(cover_id)]} {cover_fix_name[len(cover_id):]}"
+                        cover_name = cover_fix_name.replace(cover_id, cover_dict[cover_id])
                         break
-                if not cover_name:
+                if cover in d["temp"]:
+                    d["bundle"].setdefault(cover_name, {"origin":"","blur":""})
+                    if blur:
+                        d["bundle"][cover_name]["blur"] = covers_bundle[cover]
+                    else:
+                        d["bundle"][cover_name]["origin"] = covers_bundle[cover]
+                    print(f"    [Info]    [cover.name]: \033[36m\"{cover}\"\033[0m 命名映射为 \033[36m\"{cover_name}\"\033[0m")
+                else:
                     print(f"    \033[33m[Warning]\033[0m [cover.name]: \033[36m\"{cover}\"\033[0m 无对应章节命名，将使用默认文件名")
-                    cover_name = cover
-                tsv.write(f"{cover}\t{cover_name}\t{covers_bundle[cover]}\n")
+                    d["bundle"].setdefault(cover_fix_name, {"origin":"","blur":""})
+                    if blur:
+                        d["bundle"][cover_fix_name]["blur"] = covers_bundle[cover]
+                    else:
+                        d["bundle"][cover_fix_name]["origin"] = covers_bundle[cover]
+                if cover in cover_dict:
+                    d["installed"].append(cover_name)
+            for cover_name in d["bundle"]:
+                i = ""
+                if cover_name in d["installed"]:
+                    i = True
+                tsv.write(f"{cover_name}\t{i}\t{d["bundle"][cover_name]["origin"]}\t{d["bundle"][cover_name]["blur"]}\n")
+            print(f"    \033[32m[Save]\033[0m    [cover.build]: 章节封面索引已保存至 \033[36m\"{os.path.join(self.output_dir, r".\info\cover.tsv")}\"\033[0m")
 
     def song(self):
         print("\n[build.song]     ========== 正在建立歌曲资源信息映射 ==========")
         songs_bundle = self.bundle_map["songs"]
         with open(os.path.join(self.temp_dir, "song_info.json"), "r", encoding="utf-8") as f:
             songs_info = json.load(f)
+            print(f"    [Info]    [build.song]: \033[36m\"{os.path.join(self.temp_dir, "song_info.json")}\033[0m\" 已加载")
         with open(os.path.join(self.temp_dir, "chapters.json"), "r", encoding="utf-8") as f:
             chapters = json.load(f)
+            print(f"    [Info]    [build.song]: \033[36m\"{os.path.join(self.temp_dir, "chapters.json")}\033[0m\" 已加载")
         with open(os.path.join(self.temp_dir, "level_mapping.json"), "r", encoding="utf-8") as f:
             levels = json.load(f)
-        with open(os.path.join(self.output_dir, "./info/song.tsv"), "w", newline="", encoding="utf-8") as tsv:
+            print(f"    [Info]    [build.song]: \033[36m\"{os.path.join(self.temp_dir, "level_mapping.json")}\033[0m\" 已加载")
+        print()
+        with open(os.path.join(self.output_dir, r".\info\song.tsv"), "w", newline="", encoding="utf-8") as tsv:
             tsv.write(
                 "key\tname\tchapter\tcomposer\tillustrator\t"
                 "difficultyEZ\tdifficultyHD\tdifficultyIN\tdifficultyAT\tdifficultyLegacy\t"
@@ -162,6 +206,7 @@ class Build:
                 )
 
             for song_id in songs_bundle:
+                #print(f"    \033[34m[Debug]\033[0m   [song.build]:  正在为 \033[36m\"{song_id}\"\033[0m 建立索引")
                 song_names = s.Fix(song_id).song_name()
                 if song_names:
                     if song_id in songs_info:
@@ -179,3 +224,4 @@ class Build:
                     else:
                         print(song_id)
                         continue
+            print(f"    \033[32m[Save]\033[0m    [song.build]: 歌曲索引已保存至 \033[36m\"{os.path.join(self.output_dir, r".\info\song.tsv")}\"\033[0m")

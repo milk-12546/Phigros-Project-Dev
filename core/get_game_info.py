@@ -6,7 +6,8 @@ from utils import dxf
 
 
 def parser(g, l, t, temp_dir):
-    print("\033[34m[Debug]\033[0m   [get]: 准备提取游戏信息")
+    print()
+    #print("\033[34m[Debug]\033[0m   [get]: 准备提取游戏信息")
     env = Environment()
     env.load_file(g, name=r"assets\bin\Data\globalgamemanagers.assets")
     print("[Info]    [get]: \033[36m\"globalgamemanagers.assets\033[0m\" 已载入")
@@ -15,7 +16,8 @@ def parser(g, l, t, temp_dir):
     game_information = None
     collections = None
     tips = None
-    print("\n\033[34m[Debug]\033[0m   [get]: 正在处理 \033[36m\"globalgamemanagers.assets\033[0m\" 和 \033[36m\"level0\033[0m\"")
+    print()
+    #print("\n\033[34m[Debug]\033[0m   [get]: 正在处理 \033[36m\"globalgamemanagers.assets\033[0m\" 和 \033[36m\"level0\033[0m\"")
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
@@ -74,7 +76,7 @@ def parser(g, l, t, temp_dir):
     for key, songs in game_information["song"].items():
         for song in songs:
             song_id = song["songsId"]
-            print(f"    \033[34m[Debug]\033[0m   [song.info]:  正在处理 \033[36m\"{song_id}\"\033[0m 的信息")
+            #print(f"    \033[34m[Debug]\033[0m   [song.info]:  正在处理 \033[36m\"{song_id}\"\033[0m 的信息")
             song_diff = {
                 level: [dxf.d2f(diff), charter]
                 for level, diff, charter in zip(song["levels"], song["difficulty"], song["charter"])
@@ -87,9 +89,13 @@ def parser(g, l, t, temp_dir):
                 "AT": "[AT]",
                 "Legacy": "[Legacy]"
             }
-            space = " " * (24 - (len(song_diff) * 4 + (len(song_diff) - 1) if song_diff else 0))
+            space = " " * (28 - (len(song_diff) * 4 + (len(song_diff) - 1) if song_diff else 0))
             color_str = " ".join([color.get(d, f"\033[36m[{d}]\033[0m") for d in song_diff]) + space
-            print(f"    [Info]    [song.level]: {color_str} \033[36m\"{song_id}\"\033[0m 有 \033[36m{len(song_diff)}\033[0m 个难度\n")
+            if "[Legacy]" in color_str:
+                color_str = color_str.replace("[Legacy]    ", "[Legacy]")
+                if "[AT]" not in color_str:
+                    color_str = color_str.replace("[Legacy]     ", "     [Legacy]")
+            print(f"    [Info]    [song.level]: {color_str} \033[36m\"{song_id}\"\033[0m 有 \033[36m{len(song_diff)}\033[0m 个难度")
             #难度过滤
             if "AT" in song_diff:
                 special_level["AT"].append(song_id)
@@ -133,19 +139,19 @@ def parser(g, l, t, temp_dir):
         "avatar": []
     }
     for key in game_information["keyStore"]:
-        print(f"    \033[34m[Debug]\033[0m   [key.info]:  正在处理 \033[36m\"{key["keyName"]}\"\033[0m 的信息")
+        #print(f"    \033[34m[Debug]\033[0m   [key.info]:  正在处理 \033[36m\"{key["keyName"]}\"\033[0m 的分类")
         if key["kindOfKey"] == 0:
             keys["single"].append(key["keyName"])
-            print(f"    [Info]    [key.single]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"单曲\"\033[0m\n")
+            print(f"    [Info]    [key.single]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"单曲\"\033[0m")
         if key["kindOfKey"] == 1:
             keys["collection"][key["keyName"]] = key["unlockTimes"]
-            print(f"    [Info]    [key.collection]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"收藏品\"\033[0m ，共有 \033[36m{key["unlockTimes"]}\033[0m 个\n")
+            print(f"    [Info]    [key.collection]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"收藏品\"\033[0m ，共有 \033[36m{key["unlockTimes"]}\033[0m 个")
         if key["kindOfKey"] == 2:
             keys["illustration"].append(key["keyName"])
-            print(f"    [Info]    [key.illustration]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"曲绘\"\033[0m\n")
+            print(f"    [Info]    [key.illustration]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"曲绘\"\033[0m")
         if key["kindOfKey"] == 3:
             keys["avatar"].append(key["keyName"])
-            print(f"    [Info]    [key.avatar]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"头像\"\033[0m\n")
+            print(f"    [Info]    [key.avatar]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"头像\"\033[0m")
     with open(os.path.join(temp_dir, "keys.json"), "w", encoding="utf-8") as f:
         json.dump(keys, f, ensure_ascii=False, indent=4)
         print(f"    \033[32m[Save]\033[0m    [key.info]: 键名分类已保存至 \033[36m\"{os.path.join(temp_dir, "keys.json")}\"\033[0m")
