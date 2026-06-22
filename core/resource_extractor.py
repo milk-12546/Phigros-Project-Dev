@@ -13,11 +13,11 @@ class APK:
         with self.apk_src.open("assets/aa/catalog.json") as c:
             return catalog.parser(json.load(c))
 
-    def info(self):
+    def info(self, temp_dir):
         with self.apk_src.open("assets/bin/Data/globalgamemanagers.assets") as g:
             with self.apk_src.open("assets/bin/Data/level0") as l:
                 with open("./scripts/typetree.json") as t:
-                    get_game_info.parser(g.read(), l.read(), json.load(t))
+                    get_game_info.parser(g.read(), l.read(), json.load(t), temp_dir)
 
     def bundle(self, value):
         file = self.apk_src.open("assets/aa/Android/%s" % value)

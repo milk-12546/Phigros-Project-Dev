@@ -12,6 +12,7 @@ class Build:
         self.apk_ver = apk_ver
 
     def avatar(self):
+        print("\n[build.avatar]   ========== 正在建立头像资源信息映射 ==========")
         avatars_bundle = self.bundle_map["avatars"]
         with open(os.path.join(self.temp_dir, "key_avatar_name.json"), "r", encoding="utf-8") as f:
             avatar_dict = json.load(f)
@@ -21,11 +22,12 @@ class Build:
                 if avatar in avatar_dict:
                     avatar_name = avatar_dict[avatar]
                 else:
-                    print(f"\033[33m[头像资源索引] Warning:\033[0m \"{avatar}\" 未实装 或 信息缺失，将使用默认文件名")
+                    print(f"    \033[33m[Warning]\033[0m [avatar.name]: \033[36m\"{avatar}\"\033[0m 未实装 或 无对应头像命名，将使用默认文件名")
                     avatar_name = avatar
                 tsv.write(f"{avatar}\t{avatar_name}\t{avatars_bundle[avatar]}\n")
 
     def cover(self):
+        print("\n[build.cover]    ========== 正在建立章节封面资源信息映射 ==========")
         covers_bundle = self.bundle_map["covers"]
         with open(os.path.join(self.temp_dir, "chapters_name.json"), "r", encoding="utf-8") as f:
             cover_dict = json.load(f)
@@ -38,18 +40,19 @@ class Build:
                         cover_name = f"{cover.replace(cover_id, f"{cover_dict[cover_id]} (")})".replace(" ()", "")
                         break
                 if not cover_name:
-                    print(f"\033[33m[章节封面索引] Warning:\033[0m \"{cover}\" 无章节名字，将使用默认文件名")
+                    print(f"    \033[33m[Warning]\033[0m [cover.name]: \033[36m\"{cover}\"\033[0m 无对应章节命名，将使用默认文件名")
                     cover_name = cover
                 tsv.write(f"{cover}\t{cover_name}\t{covers_bundle[cover]}\n")
 
     def song(self):
+        print("\n[build.song]     ========== 正在建立歌曲资源信息映射 ==========")
         songs_bundle = self.bundle_map["songs"]
         with open(os.path.join(self.temp_dir, "song_info.json"), "r", encoding="utf-8") as f:
             songs_info = json.load(f)
         with open(os.path.join(self.temp_dir, "chapters.json"), "r", encoding="utf-8") as f:
             chapters = json.load(f)
-        with open(os.path.join(self.temp_dir, "diff_mapping.json"), "r", encoding="utf-8") as f:
-            difficulties = json.load(f)
+        with open(os.path.join(self.temp_dir, "level_mapping.json"), "r", encoding="utf-8") as f:
+            levels = json.load(f)
         with open(os.path.join(self.output_dir, "./info/song.tsv"), "w", newline="", encoding="utf-8") as tsv:
             tsv.write(
                 "key\tname\tchapter\tcomposer\tillustrator\t"
@@ -88,32 +91,31 @@ class Build:
                 if ill_blur_bundle == "": ill_blur_bundle = song_bundle["IllustrationBlur"]
                 if ill_low_res_bundle == "": ill_low_res_bundle = song_bundle["IllustrationLowRes"]
 
-                if non_regular == "":
-                    if key in difficulties["nonRegular"]:
-                        non_regular = difficulties["nonRegular"][key]
-                    if "EZ" not in non_regular:
-                        if ez_bundle == "": ez_bundle = song_bundle["Chart_EZ"]
-                        if "EZ" in song_info["levelInfo"]:
-                            if diff_ez == "": diff_ez = song_info["levelInfo"]["EZ"][0]
-                            if charter_ez == "": charter_ez = song_info["levelInfo"]["EZ"][1]
-                    if "HD" not in non_regular:
-                        if hd_bundle == "": hd_bundle = song_bundle["Chart_HD"]
-                        if "HD" in song_info["levelInfo"]:
-                            if diff_hd == "": diff_hd = song_info["levelInfo"]["HD"][0]
-                            if charter_hd == "": charter_hd = song_info["levelInfo"]["HD"][1]
-                    if "IN" not in non_regular:
-                        if in_bundle == "": in_bundle = song_bundle["Chart_IN"]
-                        if "IN" in song_info["levelInfo"]:
-                            if diff_in == "": diff_in = song_info["levelInfo"]["IN"][0]
-                            if charter_in == "": charter_in = song_info["levelInfo"]["IN"][1]
+                if key in levels["nonRegular"]:
+                    non_regular = levels["nonRegular"][key]
+                if "EZ" not in non_regular:
+                    if ez_bundle == "": ez_bundle = song_bundle["Chart_EZ"]
+                    if "EZ" in song_info["levelInfo"]:
+                        if diff_ez == "": diff_ez = song_info["levelInfo"]["EZ"][0]
+                        if charter_ez == "": charter_ez = song_info["levelInfo"]["EZ"][1]
+                if "HD" not in non_regular:
+                    if hd_bundle == "": hd_bundle = song_bundle["Chart_HD"]
+                    if "HD" in song_info["levelInfo"]:
+                        if diff_hd == "": diff_hd = song_info["levelInfo"]["HD"][0]
+                        if charter_hd == "": charter_hd = song_info["levelInfo"]["HD"][1]
+                if "IN" not in non_regular:
+                    if in_bundle == "": in_bundle = song_bundle["Chart_IN"]
+                    if "IN" in song_info["levelInfo"]:
+                        if diff_in == "": diff_in = song_info["levelInfo"]["IN"][0]
+                        if charter_in == "": charter_in = song_info["levelInfo"]["IN"][1]
 
-                if song_id in difficulties["AT"] or key in difficulties["AT"]:
+                if song_id in levels["AT"] or key in levels["AT"]:
                     if at_bundle == "": at_bundle = song_bundle["Chart_AT"]
                     if "AT" in song_info["levelInfo"]:
                         if diff_at == "": diff_at = song_info["levelInfo"]["AT"][0]
                         if charter_at == "": charter_at = song_info["levelInfo"]["AT"][1]
 
-                if song_id in difficulties["Legacy"] or key in difficulties["Legacy"]:
+                if song_id in levels["Legacy"] or key in levels["Legacy"]:
                     if legacy_bundle == "": legacy_bundle = song_bundle["Chart_Legacy"]
                     if "Legacy" in song_info["levelInfo"]:
                         if diff_legacy == "": diff_legacy = song_info["levelInfo"]["Legacy"][0]

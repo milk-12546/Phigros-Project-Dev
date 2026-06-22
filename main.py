@@ -9,10 +9,10 @@ apk_path, apk_ver, spec_ver = taptap.TapTapClient().get_apk()
 
 # ========== 检查上次版本 ========== #
 need_update = False
-os.makedirs("./output/info", exist_ok=True)
-f = os.open("./output/info/info_ver.txt", os.O_RDWR | os.O_CREAT)
+os.makedirs(r".\output\info", exist_ok=True)
+f = os.open(r".\output\info\info_ver.txt", os.O_RDWR | os.O_CREAT)
 info_ver = os.read(f, 256).decode("utf-8")
-if info_ver and os.path.exists("./temp"):
+if info_ver and os.path.exists(r".\temp"):
     if spec_ver:
         if apk_ver != info_ver:
             need_update = True
@@ -23,21 +23,21 @@ else:
     need_update = True
 
 #手动更新资源（临时调试）
-#need_update = True
+need_update = True
 # ========== 资源信息加载 ========== #
 if need_update:
     #确保目录存在
-    os.makedirs("./temp", exist_ok=True)
+    os.makedirs(r".\temp", exist_ok=True)
 
     #提取游戏信息
     apk = extract.APK(apk_path)
-    apk.info()
+    apk.info(r".\temp")
 
     #游戏资源映射
     mapping = apk.catalog()
 
     #游戏信息整理
-    build_info = build.Build("./temp", "./output", mapping, apk_ver)
+    build_info = build.Build(r".\temp", r".\output", mapping, apk_ver)
     build_info.avatar()
     build_info.cover()
     build_info.song()
