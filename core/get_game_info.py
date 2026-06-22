@@ -10,14 +10,14 @@ def parser(g, l, t, temp_dir):
     #print("\033[34m[Debug]\033[0m   [get]: 准备提取游戏信息")
     env = Environment()
     env.load_file(g, name=r"assets\bin\Data\globalgamemanagers.assets")
-    print("[Info]    [get]: \033[36m\"globalgamemanagers.assets\033[0m\" 已载入")
+    print("[Info]    [get]: \033[36m\"globalgamemanagers.assets\"\033[0m 已载入")
     env.load_file(l)
-    print("[Info]    [get]: \033[36m\"level0\033[0m\" 已载入")
+    print("[Info]    [get]: \033[36m\"level0\"\033[0m 已载入")
     game_information = None
     collections = None
     tips = None
     print()
-    #print("\n\033[34m[Debug]\033[0m   [get]: 正在处理 \033[36m\"globalgamemanagers.assets\033[0m\" 和 \033[36m\"level0\033[0m\"")
+    #print("\n\033[34m[Debug]\033[0m   [get]: 正在处理 \033[36m\"globalgamemanagers.assets\"\033[0m 和 \033[36m\"level0\"\033[0m")
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
@@ -25,21 +25,21 @@ def parser(g, l, t, temp_dir):
         #歌曲相关信息
         if data.m_Script.get_obj().read().name == "GameInformation":
             game_information = obj.read_typetree(t["GameInformation"])
-            print("[Info]    [get]: \033[36m\"GameInformation\033[0m\" 已加载")
+            print("[Info]    [get]: \033[36m\"GameInformation\"\033[0m 已加载")
         #文件+头像 名字映射
         elif data.m_Script.get_obj().read().name == "GetCollectionControl":
             collections = obj.read_typetree(t["GetCollectionControl"], True)
-            print("[Info]    [get]: \033[36m\"GetCollectionControl\033[0m\" 已加载")
+            print("[Info]    [get]: \033[36m\"GetCollectionControl\"\033[0m 已加载")
         #Tips文本
         elif data.m_Script.get_obj().read().name == "TipsProvider":
             tips = obj.read_typetree(t["TipsProvider"], True)
-            print("[Info]    [get]: \033[36m\"TipsProvider\033[0m\" 已加载")
+            print("[Info]    [get]: \033[36m\"TipsProvider\"\033[0m 已加载")
     if not game_information:
-        print("\033[31m[Error]\033[0m   [get]: \033[36m\"GameInformation\033[0m\" 加载失败")
+        print("\033[31m[Error]\033[0m   [get]: \033[36m\"GameInformation\"\033[0m 加载失败")
     if not collections:
-        print("\033[31m[Error]\033[0m   [get]: \033[36m\"GetCollectionControl\033[0m\" 加载失败")
+        print("\033[31m[Error]\033[0m   [get]: \033[36m\"GetCollectionControl\"\033[0m 加载失败")
     if not tips:
-        print("\033[31m[Error]\033[0m   [get]: \033[36m\"TipsProvider\033[0m\" 加载失败")
+        print("\033[31m[Error]\033[0m   [get]: \033[36m\"TipsProvider\"\033[0m 加载失败")
 
 # ========== GameInformation ========== #
     #章节分类（歌曲 + 章节封面命名）

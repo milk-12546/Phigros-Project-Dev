@@ -16,7 +16,7 @@ class Build:
         avatars_bundle = self.bundle_map["avatars"]
         with open(os.path.join(self.temp_dir, "key_avatar_name.json"), "r", encoding="utf-8") as f:
             avatar_dict = json.load(f)
-            print(f"    [Info]    [build.avatar]: \033[36m\"{os.path.join(self.temp_dir, "key_avatar_name.json")}\033[0m\" 已加载")
+            print(f"    [Info]    [build.avatar]: \033[36m\"{os.path.join(self.temp_dir, "key_avatar_name.json")}\"\033[0m 已加载")
         print()
         with open(os.path.join(self.output_dir, r".\info\avatar.tsv"), "w", newline="", encoding="utf-8") as tsv:
             tsv.write("key\tname\tbundle\n")
@@ -36,7 +36,7 @@ class Build:
         covers_bundle = self.bundle_map["covers"]
         with open(os.path.join(self.temp_dir, "chapters_name.json"), "r", encoding="utf-8") as f:
             cover_dict = json.load(f)
-            print(f"    [Info]    [build.cover]: \033[36m\"{os.path.join(self.temp_dir, "chapters_name.json")}\033[0m\" 已加载")
+            print(f"    [Info]    [build.cover]: \033[36m\"{os.path.join(self.temp_dir, "chapters_name.json")}\"\033[0m 已加载")
         print()
         with open(os.path.join(self.output_dir, r".\info\cover.tsv"), "w", newline="", encoding="utf-8") as tsv:
             tsv.write("name\tinstalled\tcover_bundle\tcoverBlur_bundle\n")
@@ -89,13 +89,13 @@ class Build:
         songs_bundle = self.bundle_map["songs"]
         with open(os.path.join(self.temp_dir, "song_info.json"), "r", encoding="utf-8") as f:
             songs_info = json.load(f)
-            print(f"    [Info]    [build.song]: \033[36m\"{os.path.join(self.temp_dir, "song_info.json")}\033[0m\" 已加载")
+            print(f"    [Info]    [build.song]: \033[36m\"{os.path.join(self.temp_dir, "song_info.json")}\"\033[0m 已加载")
         with open(os.path.join(self.temp_dir, "chapters.json"), "r", encoding="utf-8") as f:
             chapters = json.load(f)
-            print(f"    [Info]    [build.song]: \033[36m\"{os.path.join(self.temp_dir, "chapters.json")}\033[0m\" 已加载")
+            print(f"    [Info]    [build.song]: \033[36m\"{os.path.join(self.temp_dir, "chapters.json")}\"\033[0m 已加载")
         with open(os.path.join(self.temp_dir, "level_mapping.json"), "r", encoding="utf-8") as f:
             levels = json.load(f)
-            print(f"    [Info]    [build.song]: \033[36m\"{os.path.join(self.temp_dir, "level_mapping.json")}\033[0m\" 已加载")
+            print(f"    [Info]    [build.song]: \033[36m\"{os.path.join(self.temp_dir, "level_mapping.json")}\"\033[0m 已加载")
         print()
         with open(os.path.join(self.output_dir, r".\info\song.tsv"), "w", newline="", encoding="utf-8") as tsv:
             tsv.write(
