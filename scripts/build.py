@@ -178,14 +178,14 @@ class Build:
                         j = {}
                         for i in song_bundle:
                             if i.startswith("Illustration_"):
-                                j[f"{i.replace("Illustration_")}"] = "origin"
-                                j[f"{i.replace("Illustration_")}"]["origin"] = song_bundle[i]
+                                j[f"{i.replace("Illustration_", "")}"] = "origin"
+                                j[f"{i.replace("Illustration_", "")}"]["origin"] = song_bundle[i]
                             elif i.startswith("IllustrationBlur_"):
-                                j[f"{i.replace("IllustrationBlur_")}"] = "blur"
-                                j[f"{i.replace("IllustrationBlur_")}"]["blur"] = song_bundle[i]
+                                j[f"{i.replace("IllustrationBlur_", "")}"] = "blur"
+                                j[f"{i.replace("IllustrationBlur_", "")}"]["blur"] = song_bundle[i]
                             elif i.startswith("IllustrationLowRes_"):
-                                j[f"{i.replace("IllustrationLowRes_")}"] = "low_res"
-                                j[f"{i.replace("IllustrationLowRes_")}"]["low_res"] = song_bundle[i]
+                                j[f"{i.replace("IllustrationLowRes_", "")}"] = "low_res"
+                                j[f"{i.replace("IllustrationLowRes_", "")}"]["low_res"] = song_bundle[i]
                         different_cover = j
 
                 if sp == "":

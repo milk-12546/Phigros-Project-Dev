@@ -25,7 +25,6 @@
 **在开发过程中，我深入研读并借鉴了以下开源项目的优秀实现：**
 - [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource) - 借鉴了其 *{待整理}* 的代码。
 - [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Library-red?logo=github)](https://github.com/7aGiven/PhigrosLibrary) - 借鉴了其 *{待整理}* 的代码。
-- [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--LocalAction--Python-red?logo=github)](https://github.com/wms26/Phi-LocalAction-python) - 借鉴了其 *{待整理}* 的代码。
 
 #### 📝 修改日誌
 - 详细的重构记录、功能改动及实验心得，请参见：

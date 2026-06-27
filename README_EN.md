@@ -25,7 +25,6 @@ By referencing and integrating the implementation logic of multiple open-source 
 **During development, I have studied and learned from the following excellent open-source projects:**
 - [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Resource-red?logo=github)](https://github.com/7aGiven/Phigros_Resource) - Implementation ideas from *{To be organized}*.
 - [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--Library-red?logo=github)](https://github.com/7aGiven/PhigrosLibrary) - Implementation ideas from *{To be organized}*.
-- [![Phigros_Resource](https://img.shields.io/badge/GitHub-Phi--LocalAction--Python-red?logo=github)](https://github.com/wms26/Phi-LocalAction-python) - Implementation ideas from *{To be organized}*.
 
 #### 📝 Change Log
 - For detailed refactoring records, functional changes, and experimental insights, please refer to:
