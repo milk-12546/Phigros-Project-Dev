@@ -5,7 +5,7 @@ import os
 from typing import List, Union
 
 
-def parser(data) -> str:
+def parser(data, debug=False) -> str:
     key_data = base64.b64decode(data["m_KeyDataString"])
     bucket_data = base64.b64decode(data["m_BucketDataString"])
     entry_data = base64.b64decode(data["m_EntryDataString"])
@@ -103,6 +103,7 @@ def parser(data) -> str:
 
     mapping = json.dumps(result, sort_keys=True, ensure_ascii=False, indent=4)
 
-    with open("./temp/bundle_mapping.json", "w", encoding="utf-8") as f:
-        f.write(mapping)
+    if debug:
+        with open("./temp/bundle_mapping.json", "w", encoding="utf-8") as f:
+            f.write(mapping)
     return json.loads(mapping)

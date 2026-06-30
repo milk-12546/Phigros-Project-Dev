@@ -5,9 +5,10 @@ from UnityPy import Environment
 from utils import dxf
 
 
-def parser(g, l, t, temp_dir):
-    print()
-    #print("\033[34m[Debug]\033[0m   [get]: 准备提取游戏信息")
+def parser(g, l, t, out_dir=r".\temp", debug=False):
+    if debug:
+        print()
+        print("\033[34m[Debug]\033[0m   [get]: 准备提取游戏信息")
     env = Environment()
     env.load_file(g, name=r"assets\bin\Data\globalgamemanagers.assets")
     print("[Info]    [get]: \033[36m\"globalgamemanagers.assets\"\033[0m 已载入")
@@ -16,8 +17,9 @@ def parser(g, l, t, temp_dir):
     game_information = None
     collections = None
     tips = None
-    print()
-    #print("\n\033[34m[Debug]\033[0m   [get]: 正在处理 \033[36m\"globalgamemanagers.assets\"\033[0m 和 \033[36m\"level0\"\033[0m")
+    if debug:
+        print()
+        print("\n\033[34m[Debug]\033[0m   [get]: 正在处理 \033[36m\"globalgamemanagers.assets\"\033[0m 和 \033[36m\"level0\"\033[0m")
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
@@ -54,16 +56,20 @@ def parser(g, l, t, temp_dir):
             song_id = song["songsId"]
             chapter_data[chapter_name].append(song_id)
             print(f"    [Info]    [chapter.song]: \033[36m\"{song_id}\"\033[0m 归类为 \033[36m\"{chapter_name}\"\033[0m 章节")
-        #章节封面命名映射
         chapters_name[chapter_code] = chapter_name
         print(f"    [Info]    [chapter.name]: \033[36m\"{chapter_code}\"\033[0m 命名映射为 \033[36m\"{chapter_name}\"\033[0m")
-        with open(os.path.join(temp_dir, "chapters_name.json"), "w", encoding="utf-8") as f:
-            json.dump(chapters_name, f, ensure_ascii=False, indent=4)
-            print(f"    \033[32m[Save]\033[0m    [chapter.song]: \033[36m\"{chapter_name}\"\033[0m 章节的歌曲已添加至 \033[36m\"{os.path.join(temp_dir, "chapters_name.json")}\"\033[0m\n")
-    #歌曲章节分类
-    with open(os.path.join(temp_dir, "chapters.json"), "w", encoding="utf-8") as f:
-        json.dump(chapter_data, f, ensure_ascii=False, indent=4)
-        print(f"    \033[32m[Save]\033[0m    [chapter.name]: 章节命名已保存至 \033[36m\"{os.path.join(temp_dir, "chapters.json")}\"\033[0m")
+    c_n = json.dumps(chapters_name, ensure_ascii=False, indent=4)
+    c_d = json.dumps(chapter_data, ensure_ascii=False, indent=4)
+    if debug:
+        print()
+        #章节封面命名映射
+        with open(os.path.join(out_dir, "chapters_name.json"), "w", encoding="utf-8") as f:
+            f.write(c_n)
+            print(f"    \033[32m[Save]\033[0m    [chapter.song]: 章节分类已保存至 \033[36m\"{os.path.join(out_dir, "chapters_name.json")}\"\033[0m")
+        #歌曲章节分类
+        with open(os.path.join(out_dir, "chapters.json"), "w", encoding="utf-8") as f:
+            f.write(c_d)
+            print(f"    \033[32m[Save]\033[0m    [chapter.name]: 章节命名已保存至 \033[36m\"{os.path.join(out_dir, "chapters.json")}\"\033[0m")
 
     #歌曲信息（包含难度分类）
     print("\n[get.song]       ========== 正在提取歌曲信息 ==========")
@@ -76,7 +82,8 @@ def parser(g, l, t, temp_dir):
     for key, songs in game_information["song"].items():
         for song in songs:
             song_id = song["songsId"]
-            #print(f"    \033[34m[Debug]\033[0m   [song.info]:  正在处理 \033[36m\"{song_id}\"\033[0m 的信息")
+            if debug:
+                print(f"    \033[34m[Debug]\033[0m   [song.info]:  正在处理 \033[36m\"{song_id}\"\033[0m 的信息")
             song_diff = {
                 level: [dxf.d2f(diff), charter]
                 for level, diff, charter in zip(song["levels"], song["difficulty"], song["charter"])
@@ -121,14 +128,18 @@ def parser(g, l, t, temp_dir):
                 "hasDifferentMusic": song["hasDifferentMusic"],
                 "hasDifferentCover": song["hasDifferentCover"]
             }
-    #歌曲信息
-    with open(os.path.join(temp_dir, "song_info.json"), "w", encoding="utf-8") as f:
-        json.dump(song_info, f, ensure_ascii=False, indent=4)
-        print(f"    \033[32m[Save]\033[0m    [song.info]:  歌曲信息已保存至 \033[36m\"{os.path.join(temp_dir, "song_info.json")}\"\033[0m")
-    #难度分类
-    with open(os.path.join(temp_dir, "level_mapping.json"), "w", encoding="utf-8") as f:
-        json.dump(special_level, f, ensure_ascii=False, indent=4)
-        print(f"    \033[32m[Save]\033[0m    [song.level]: 难度分类已保存至 \033[36m\"{os.path.join(temp_dir, "level_mapping.json")}\"\033[0m")
+    s_i = json.dumps(song_info, ensure_ascii=False, indent=4)
+    s_l = json.dumps(special_level, ensure_ascii=False, indent=4)
+    if debug:
+        print()
+        #歌曲信息
+        with open(os.path.join(out_dir, "song_info.json"), "w", encoding="utf-8") as f:
+            f.write(s_i)
+            print(f"    \033[32m[Save]\033[0m    [song.info]:  歌曲信息已保存至 \033[36m\"{os.path.join(out_dir, "song_info.json")}\"\033[0m")
+        #难度分类
+        with open(os.path.join(out_dir, "level_mapping.json"), "w", encoding="utf-8") as f:
+            f.write(s_l)
+            print(f"    \033[32m[Save]\033[0m    [song.level]: 难度分类已保存至 \033[36m\"{os.path.join(out_dir, "level_mapping.json")}\"\033[0m")
 
     #单曲+文件+曲绘+头像
     print("\n[get.key]        ========== 正在提取键名分类 ==========")
@@ -139,7 +150,8 @@ def parser(g, l, t, temp_dir):
         "avatar": []
     }
     for key in game_information["keyStore"]:
-        #print(f"    \033[34m[Debug]\033[0m   [key.info]:  正在处理 \033[36m\"{key["keyName"]}\"\033[0m 的分类")
+        if debug:
+            print(f"    \033[34m[Debug]\033[0m   [key.info]:  正在处理 \033[36m\"{key["keyName"]}\"\033[0m 的分类")
         if key["kindOfKey"] == 0:
             keys["single"].append(key["keyName"])
             print(f"    [Info]    [key.single]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"单曲\"\033[0m")
@@ -152,9 +164,12 @@ def parser(g, l, t, temp_dir):
         if key["kindOfKey"] == 3:
             keys["avatar"].append(key["keyName"])
             print(f"    [Info]    [key.avatar]: \033[36m\"{key["keyName"]}\"\033[0m 归类为 \033[36m\"头像\"\033[0m")
-    with open(os.path.join(temp_dir, "keys.json"), "w", encoding="utf-8") as f:
-        json.dump(keys, f, ensure_ascii=False, indent=4)
-        print(f"    \033[32m[Save]\033[0m    [key.info]: 键名分类已保存至 \033[36m\"{os.path.join(temp_dir, "keys.json")}\"\033[0m")
+    k = json.dumps(keys, ensure_ascii=False, indent=4)
+    if debug:
+        print()
+        with open(os.path.join(out_dir, "keys.json"), "w", encoding="utf-8") as f:
+            f.write(k)
+            print(f"    \033[32m[Save]\033[0m    [key.info]: 键名分类已保存至 \033[36m\"{os.path.join(out_dir, "keys.json")}\"\033[0m")
 
 
 # ========== GetCollectionControl ========== #
@@ -170,23 +185,32 @@ def parser(g, l, t, temp_dir):
     for key in items:
         files[key] = items[key][0]
         print(f"    [Info]    [collection.name]: \033[36m\"{key}\"\033[0m 命名映射为 \033[36m\"{items[key][0]}\"\033[0m")
-    with open(os.path.join(temp_dir, "key_collection_name.json"), "w", encoding="utf-8") as f:
-        json.dump(files, f, ensure_ascii=False, indent=4)
-        print(f"    \033[32m[Save]\033[0m    [collection.name]: 收藏品命名已保存至 \033[36m\"{os.path.join(temp_dir, "key_collection_name.json")}\"\033[0m\n")
+    fls = json.dumps(files, ensure_ascii=False, indent=4)
+    if debug:
+        print()
+        with open(os.path.join(out_dir, "key_collection_name.json"), "w", encoding="utf-8") as f:
+            f.write(fls)
+            print(f"    \033[32m[Save]\033[0m    [collection.name]: 收藏品命名已保存至 \033[36m\"{os.path.join(out_dir, "key_collection_name.json")}\"\033[0m\n")
 
     #头像命名映射
     avatars = {}
     for item in collections.avatars:
         avatars[item.addressableKey[7:]] = item.name
         print(f"    [Info]    [avatar.name]: \033[36m\"{avatars[item.addressableKey[7:]]}\"\033[0m 命名映射为 \033[36m\"{item.name}\"\033[0m")
-    with open(os.path.join(temp_dir, "key_avatar_name.json"), "w", encoding="utf-8") as f:
-        json.dump(avatars, f, ensure_ascii=False, indent=4)
-        print(f"    \033[32m[Save]\033[0m    [avatar.name]: 头像命名已保存至 \033[36m\"{os.path.join(temp_dir, "key_avatar_name.json")}\"\033[0m")
+    a = json.dumps(avatars, ensure_ascii=False, indent=4)
+    if debug:
+        print()
+        with open(os.path.join(out_dir, "key_avatar_name.json"), "w", encoding="utf-8") as f:
+            f.write(a)
+            print(f"    \033[32m[Save]\033[0m    [avatar.name]: 头像命名已保存至 \033[36m\"{os.path.join(out_dir, "key_avatar_name.json")}\"\033[0m")
 
 
 # ========== TipsProvider ========== #
     #Tips文本
     print("\n[get.tip]        ========== 正在提取提示文本 ==========")
-    with open(os.path.join(temp_dir, "tips.json"), "w", encoding="utf-8") as f:
-        json.dump(tips.tips[0].tips, f, ensure_ascii=False, indent=4)
-        print(f"    \033[32m[Save]\033[0m    [tip.text]: 提示文本已保存至 \033[36m\"{os.path.join(temp_dir, "tips.json")}\"\033[0m")
+    with open(os.path.join(r".\output\info", "tips.txt"), "w", encoding="utf-8") as f:
+        for tip in tips.tips[0].tips:
+            f.write(f"{tip}\n")
+        print(f"    \033[32m[Save]\033[0m    [tip.text]: 提示文本已保存至 \033[36m\"{os.path.join(r".\output\info", "tips.txt")}\"\033[0m")
+
+    return c_n, c_d, s_i, s_l, k, fls, a
